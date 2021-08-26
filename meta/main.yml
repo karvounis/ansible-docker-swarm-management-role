@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  role_name: docker-swarm-management
+  author: Evangelos Karvounis
+  license: MIT
+  description: Manages Docker swarm components like networks, configs, secrets, volumes and stacks
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+    - name: EL
+      versions:
+        - 6
+        - 7
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+  galaxy_tags:
+    - docker
+    - docker-swarm
+    - swarm
+    - management
+    - cloud
+    - cluster
+    - orchestration
+    - system

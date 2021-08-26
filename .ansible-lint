@@ -1,0 +1,13 @@
+---
+exclude_paths:
+  - ./meta/exception.yml
+  - ./meta/preferences.yml
+  - ./molecule/default/prepare.yml
+  - ./molecule/default/converge.yml
+  - ./molecule/default/verify.yml
+  - ./molecule/default/collections.yml
+  - ./.tox
+  - ./.cache
+warn_list:  # or 'skip_list' to silence them completely
+  - meta-no-info  # meta/main.yml should contain relevant info
+  - meta-no-tags  # Tags must contain lowercase letters and digits only

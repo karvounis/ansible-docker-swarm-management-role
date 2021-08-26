@@ -1,0 +1,32 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-added-large-files
+      - id: detect-private-key
+      - id: detect-aws-credentials
+      - id: destroyed-symlinks
+      - id: check-merge-conflict
+  - repo: https://github.com/adrienverge/yamllint
+    rev: v1.26.3
+    hooks:
+      - id: yamllint
+        args: [-c=.yamllint]
+  - repo: https://github.com/robertdebock/pre-commit
+    rev: v1.2.2
+    hooks:
+      - id: ansible_role_find_unused_variable
+      - id: ansible_role_find_empty_files
+      - id: ansible_role_find_empty_directories
+  - repo: https://github.com/markdownlint/markdownlint
+    rev: master
+    hooks:
+      - id: markdownlint_docker
+  - repo: https://github.com/ansible-community/ansible-lint.git
+    rev: v5.1.2
+    hooks:
+      - id: ansible-lint
+        files: \.(yaml|yml)$

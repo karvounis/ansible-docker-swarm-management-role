@@ -1,7 +1,8 @@
 ---
 galaxy_info:
-  role_name: docker-swarm-management
+  role_name: docker_swarm_management
   author: Evangelos Karvounis
+  namespace: karvounis
   license: MIT
   description: Manages Docker swarm components like networks, configs, secrets, volumes and stacks
   min_ansible_version: 2.4

@@ -1,0 +1,98 @@
+---
+- name: Install pip dependencies
+  pip:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+  loop: "{{ pip_dependencies }}"
+  tags:
+    - pip
+
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_network_module.html
+- name: Manage Docker networks
+  community.docker.docker_network:
+    name: "{{ item.name | mandatory }}"
+    state: "{{ item.state | default('present') }}"
+    appends: "{{ item.appends | default('false') }}"
+    attachable: "{{ item.attachable | default('false') }}"
+    debug: "{{ item.debug | default('false') }}"
+    docker_host: "{{ item.docker_host | default('unix://var/run/docker.sock') }}"
+    driver: "{{ item.driver | default('overlay') }}"
+    driver_options: "{{ item.driver_options | default('{}') }}"
+    enable_ipv6: "{{ item.enable_ipv6 | default('false') }}"
+    force: "{{ item.force | default('false') }}"
+    internal: "{{ item.internal | default('false') }}"
+    ipam_config: "{{ item.ipam_config | default('[]') }}"
+    ipam_driver: "{{ item.ipam_driver | default('') }}"
+    ipam_driver_options: "{{ item.ipam_driver_options | default('{}') }}"
+    labels: "{{ item.labels | default('{}') }}"
+    scope: "{{ item.scope | default('') }}"
+  loop: "{{ docker_networks }}"
+  tags:
+    - management
+    - networks
+
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_volume_module.html
+- name: Manage Docker volumes
+  community.docker.docker_volume:
+    name: "{{ item.name | mandatory }}"
+    state: "{{ item.state | default('present') }}"
+    debug: "{{ item.debug | default('false') }}"
+    docker_host: "{{ item.docker_host | default('unix://var/run/docker.sock') }}"
+    driver: "{{ item.driver | default('local') }}"
+    driver_options: "{{ item.driver_options | default('{}') }}"
+    labels: "{{ item.labels | default('{}') }}"
+    recreate: "{{ item.recreate | default('never') }}"
+  loop: "{{ docker_volumes }}"
+  tags:
+    - management
+    - volumes
+
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_secret_module.html
+- name: Manage Docker secrets
+  community.docker.docker_secret:
+    name: "{{ item.name | mandatory }}"
+    data: "{{ item.data }}"
+    data_is_b64: "{{ item.data_is_b64 | default('false') }}"
+    state: "{{ item.state | default('present') }}"
+    debug: "{{ item.debug | default('false') }}"
+    docker_host: "{{ item.docker_host | default('unix://var/run/docker.sock') }}"
+    force: "{{ item.force | default('false') }}"
+    labels: "{{ item.labels | default('{}') }}"
+  loop: "{{ docker_secrets }}"
+  no_log: "{{ docker_secrets_no_log }}"
+  tags:
+    - management
+    - secrets
+
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_config_module.html
+- name: Manage Docker configs
+  community.docker.docker_config:
+    name: "{{ item.name | mandatory }}"
+    data: "{{ item.data }}"
+    data_is_b64: "{{ item.data_is_b64 | default('false') }}"
+    state: "{{ item.state | default('present') }}"
+    labels: "{{ item.labels | default('{}') }}"
+    debug: "{{ item.debug | default('false') }}"
+    docker_host: "{{ item.docker_host | default('unix://var/run/docker.sock') }}"
+    force: "{{ item.force | default('false') }}"
+  loop: "{{ docker_configs }}"
+  no_log: "{{ docker_configs_no_log }}"
+  tags:
+    - management
+    - configs
+
+# https://docs.ansible.com/ansible/latest/collections/community/docker/docker_stack_module.html
+- name: Deploy Docker stacks
+  community.docker.docker_stack:
+    name: "{{ item.name | mandatory }}"
+    compose: "{{ item.compose | default('[]') }}"
+    state: "{{ item.state | default('present') }}"
+    absent_retries: "{{ item.absent_retries | default(0) }}"
+    absent_retries_interval: "{{ item.absent_retries_interval | default(1) }}"
+    prune: "{{ item.prune | default('false') }}"
+    resolve_image: "{{ item.resolve_image | default('always') }}"
+    with_registry_auth: "{{ item.with_registry_auth | default('true') }}"
+  loop: "{{ docker_stacks }}"
+  tags:
+    - management
+    - stacks

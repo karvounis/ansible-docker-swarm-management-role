@@ -1,0 +1,6 @@
+---
+pip_dependencies:
+  - name: jsondiff
+    state: present
+  - name: pyyaml
+    state: present

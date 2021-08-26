@@ -1,0 +1,8 @@
+---
+docker_networks: []
+docker_volumes: []
+docker_configs: []
+docker_configs_no_log: true
+docker_secrets: []
+docker_secrets_no_log: true
+docker_stacks: []

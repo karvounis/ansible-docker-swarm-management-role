@@ -118,6 +118,10 @@ docker_stacks:
       - "{{ lookup('template', 'path_to_stack_four_template_file.yml.j2') | from_yaml }}"
 ```
 
+## Advanced examples
+
+You can find an advanced tutorial in the repo <https://github.com/karvounis/ansible-docker-swarm-management-role-example>.
+
 ## License
 
 MIT
